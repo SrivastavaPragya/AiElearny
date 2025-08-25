@@ -1,0 +1,366 @@
+.homebtn {
+  position: relative;
+  margin-top: 4rem;
+  width: 17rem;
+  background-image: linear-gradient(to right, #00eda4, #6a7df1);
+  padding: 1rem;
+  color: white;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-top-left-radius: 2rem;
+  overflow: hidden; /* Ensures the pseudo-elements do not overflow the button */
+  transition: all 0.5s ease;
+}
+
+.homebtn::before,
+.homebtn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  height: 100%;
+  background-image: linear-gradient(
+    to right,
+    #009977,
+    #4757f1
+  ); /* Darker gradient */
+
+  opacity: 0.3;
+}
+
+.homebtn::before {
+  width: 90%;
+  border-top-right-radius: 5rem;
+  border-bottom-right-radius: 5rem;
+  transition: left 0.4s ease;
+}
+
+.homebtn::after {
+  width: 70%;
+  border-top-right-radius: 3rem;
+  border-bottom-right-radius: 3rem;
+  opacity: 0.6;
+  transition: left 0.6s ease;
+}
+
+.homebtn:hover::before,
+.homebtn:hover::after {
+  left: 0%;
+}
+
+.homebtn:hover {
+  border-top-left-radius: 5px;
+}
+
+.viewCategory,
+.viewCollection {
+  position: relative;
+  color: white;
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin-inline: 5rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  padding-bottom: 0.1rem;
+  letter-spacing: 0.9px;
+}
+.viewCategory::before,
+.viewCollection::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  border-radius: 15px;
+  background-color: white;
+  width: 100%;
+  transition: all 0.3s ease; /* Smooth transition for non-focused state */
+}
+
+.viewCategory:hover::before,
+.viewCollection:hover::before {
+  animation: elasticUnderline 0.6s ease forwards;
+}
+
+@keyframes elasticUnderline {
+  0% {
+    width: 100%;
+    left: 0%;
+  }
+  50% {
+    width: 50%; /* Shrinks to 50% of its width */
+    left: 25%; /* Moves to center */
+  }
+  70% {
+    width: 120%; /* Expands to 120% of its original width */
+    left: -10%; /* Moves to the left to accommodate the expansion */
+  }
+  100% {
+    width: 100%; /* Returns to original width */
+    left: 0%; /* Returns to original position */
+  }
+}
+
+.teamProfile,
+.teamProfileImg {
+  position: relative;
+  cursor: pointer;
+}
+.teamProfile > h3 {
+  transition: color 0.5s ease-in-out;
+}
+
+.teamProfile > a {
+  position: absolute;
+  top: 33%;
+  opacity: 0;
+  transition: all 0.5s;
+}
+.teamProfile:hover > a {
+  opacity: 1;
+}
+
+.teamProfile .teamProfileImg::before {
+  content: "";
+  border: 7px solid #00eda4;
+  font-size: 14px;
+  opacity: 0;
+  width: 143px;
+  height: 143px;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transform: scale(0.95);
+  background-image: linear-gradient(to right, #00eda6cc, #6a7cf1d1);
+  transition: all 0.5s ease-in-out, opacity 0.5s ease-in-out,
+    transform 0.5s ease-in-out;
+}
+
+.teamProfile:hover .teamProfileImg::before,
+.teamProfile:hover > h3 {
+  opacity: 1;
+  transform: scale(1);
+  color: #00eda4; /* This will now only apply to h3 */
+}
+
+.teamProfile .teamProfileImg::after {
+  content: "";
+  background-image: url("/team-hover2.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transition: all 0.3s linear;
+  transform: scale(1.6);
+  overflow: hidden;
+  opacity: 0;
+}
+
+.teamProfile:hover .teamProfileImg::after {
+  opacity: 1;
+  transform: scale(1.4);
+}
+
+.teamProfile:hover {
+  background-image: url("/team-hover1.webp");
+  background-size: 12.7rem;
+  background-position: top;
+  background-repeat: no-repeat;
+}
+
+.learningAllList {
+  justify-content: center;
+  position: relative;
+  padding: 1rem;
+  text-align: center;
+}
+
+.learningList {
+  cursor: pointer;
+  display: inline-block;
+  padding: 0px;
+  text-align: center;
+  position: relative;
+  float: none;
+  margin: 0px;
+}
+
+.firstLink::after,
+.secondLink::after {
+  content: "";
+  position: absolute;
+  content: "";
+  width: 50%;
+  height: 3px;
+  bottom: 1px;
+  background: #e1e1e1;
+  right: 0;
+}
+
+.secondLink::before,
+.thirdLink::before {
+  content: "";
+  position: absolute;
+  content: "";
+  width: 50%;
+  height: 3px;
+  bottom: 1px;
+  background: #e1e1e1;
+  left: 0;
+}
+
+.learningLink {
+  display: block;
+  background: none !important;
+  font-size: 1.05rem;
+  font-weight: bold;
+  text-transform: none;
+  padding: 18px 35px 35px; /* top , right/left, bottom */
+  margin: 0 auto;
+  color: rgba(34, 34, 34, 0.33);
+  border: 0px;
+  border-radius: 0px;
+  display: block;
+  float: none;
+  position: relative;
+  width: 255px;
+  text-align: center;
+  letter-spacing: -0.01em;
+  word-spacing: 0.16em;
+  line-height: 26px;
+  transition: all 0.3s linear;
+}
+.learningLink:hover {
+  color: #00eda4;
+}
+
+.learningLink::before {
+  content: "";
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: -10px;
+  width: 24px;
+  height: 24px;
+  margin: auto;
+  border: 5px solid #f1f1f1;
+  opacity: 1;
+  border-radius: 50%;
+  background: #e1e1e1;
+  z-index: 9;
+}
+
+.learningLink.currentLink {
+  color: #00eda4;
+}
+
+.learningLink.currentLink::before {
+  border-color: #00eda4;
+  border-width: 7px;
+  transition: all 0.3s linear;
+  background: #fafafa;
+  width: 33px;
+  height: 33px;
+  bottom: -14px;
+  box-shadow: 0 5px 30px 0px rgba(0, 0, 0, 0.15);
+}
+
+.figure1,
+.figure2 {
+  position: relative;
+}
+
+.figure1:hover .blueFigure,
+.figure2:hover .blueFigure2 {
+  scale: 1.1;
+}
+
+.blueFigure {
+  transition: all 0.3s linear;
+  position: absolute;
+  width: 5rem;
+  height: 5rem;
+  background-color: #6a7df1;
+  top: -20px;
+  left: -20px;
+  border-radius: 50%;
+  opacity: 0.85;
+  z-index: 1;
+}
+.blueFigure::before {
+  content: "";
+  width: 7rem;
+  height: 7rem;
+  background: #6a7df1;
+  opacity: 0.3;
+  position: absolute;
+  border-radius: 50%;
+  top: -16px;
+  left: -16px;
+}
+
+.blueFigure2 {
+  transition: all 0.3s linear;
+  position: absolute;
+  width: 5rem;
+  height: 5rem;
+  background-color: #6a7df1;
+  top: 20px;
+  left: 82%;
+  border-radius: 50%;
+  opacity: 1;
+  z-index: -1;
+}
+
+.learningImgContainer1,
+.learningImgContainer2 {
+  position: relative;
+}
+
+.learningImgContainer1::after {
+  transition: all 0.3s linear;
+  content: "";
+  position: absolute;
+  width: 13rem;
+  height: 13rem;
+  bottom: -45px;
+  right: -82px;
+  background-color: #00eda4;
+  opacity: 0.85;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.learningImgContainer2::after {
+  transition: all 0.3s linear;
+  content: "";
+  position: absolute;
+  width: 12rem;
+  height: 12rem;
+  bottom: 11px;
+  left: -139px;
+  background-color: #00eda4;
+  opacity: 0.85;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.learningImgContainer1:hover.learningImgContainer1::after,
+.learningImgContainer2:hover.learningImgContainer2::after {
+  scale: 0.8;
+}
+
+.navbar .active {
+  color: #00eda4;
+}
