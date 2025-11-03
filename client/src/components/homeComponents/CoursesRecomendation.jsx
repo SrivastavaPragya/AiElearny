@@ -1,65 +1,97 @@
 "use client";
+
+import Image from "next/image";
 import { useInView } from "react-intersection-observer";
 
 const CoursesRecomendation = () => {
   const { ref, inView } = useInView({
-    triggerOnce: true, // Only trigger once the element comes into view
-    threshold: 0.5, // Trigger when 50% of the element is visible
+    triggerOnce: true, // trigger only once
+    threshold: 0.5, // when 50% visible
   });
+
   return (
     <div
       ref={ref}
-      className={`${!inView && "opacity-0"} opacity-100 duration-500`}
+      className={`transition-opacity duration-700 ${
+        inView ? "opacity-100" : "opacity-0"
+      }`}
     >
-      <div className="py-16 px-20 bg-[url('/violet-pista-curve.webp')] bg-[#fafafa] bg-no-repeat bg-center bg-cover grid gap-10 grid-cols-4 justify-items-center">
+      <div className="py-16 px-20 bg-[url('/violet-pista-curve.webp')] bg-[#fafafa] bg-no-repeat bg-center bg-cover grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 justify-items-center">
+        {/* 1️⃣ Card */}
         <div
-          className={`opacity-0 w-full py-14 flex flex-col justify-center items-center hover:bg-[#6a7df1] hover:text-white rounded-2xl rounded-tl-[3rem] duration-500 hover:shadow-xl cursor-pointer ${
-            inView && "animate-slide-in-from-left"
-          }`}
+          className={`w-full py-14 flex flex-col justify-center items-center 
+            hover:bg-[#6a7df1] hover:text-white rounded-2xl rounded-tl-[3rem]
+            duration-500 hover:shadow-xl cursor-pointer transition-all
+            ${inView ? "animate-slide-in-from-left opacity-100" : "opacity-0"}`}
         >
-          <div className="w-[4rem] h-[4rem] object-contain mb-8">
-            <img src="/icons/desktop.webp" className="w-full h-full" alt="" />
+          <div className="w-[4rem] h-[4rem] mb-8">
+            <Image
+              src="/icons/desktop.webp"
+              width={64}
+              height={64}
+              alt="Desktop icon"
+            />
           </div>
           <h3 className="font-heading font-extrabold text-xl">1600</h3>
           <p className="font-body font-light text-base">LEARN ANYTHING</p>
         </div>
+
+        {/* 2️⃣ Card */}
         <div
-          className={`opacity-0 w-full py-14 flex flex-col justify-center items-center hover:bg-[#6a7df1] hover:text-white rounded-2xl rounded-tl-[3rem] duration-500 hover:shadow-xl cursor-pointer ${
-            inView && "animate-slide-in-from-bottom"
-          }`}
+          className={`w-full py-14 flex flex-col justify-center items-center 
+            hover:bg-[#6a7df1] hover:text-white rounded-2xl rounded-tl-[3rem]
+            duration-500 hover:shadow-xl cursor-pointer transition-all
+            ${
+              inView ? "animate-slide-in-from-bottom opacity-100" : "opacity-0"
+            }`}
         >
-          <div className="w-[4rem] h-[4rem] object-contain mb-8">
-            <img
+          <div className="w-[4rem] h-[4rem] mb-8">
+            <Image
               src="/icons/tests-taken.webp"
-              className="w-full h-full"
-              alt=""
+              width={64}
+              height={64}
+              alt="Tests icon"
             />
           </div>
           <h3 className="font-heading font-extrabold text-xl">15900</h3>
-          <p className="font-body font-light text-base">THATS A LOT</p>
+          <p className="font-body font-light text-base">THAT'S A LOT</p>
         </div>
+
+        {/* 3️⃣ Card */}
         <div
-          className={`opacity-0 w-full py-14 flex flex-col justify-center items-center hover:bg-[#6a7df1] hover:text-white rounded-2xl rounded-tl-[3rem] duration-500 hover:shadow-xl cursor-pointer ${
-            inView && "animate-slide-in-from-top"
-          }`}
+          className={`w-full py-14 flex flex-col justify-center items-center 
+            hover:bg-[#6a7df1] hover:text-white rounded-2xl rounded-tl-[3rem]
+            duration-500 hover:shadow-xl cursor-pointer transition-all
+            ${inView ? "animate-slide-in-from-top opacity-100" : "opacity-0"}`}
         >
-          <div className="w-[4rem] h-[4rem] object-contain mb-8">
-            <img
+          <div className="w-[4rem] h-[4rem] mb-8">
+            <Image
               src="/icons/student-genius.webp"
-              className="w-full h-full"
-              alt=""
+              width={64}
+              height={64}
+              alt="Student genius icon"
             />
           </div>
           <h3 className="font-heading font-extrabold text-xl">1900</h3>
           <p className="font-body font-light text-base">FUTURE GENIUS</p>
         </div>
+
+        {/* 4️⃣ Card */}
         <div
-          className={`opacity-0 w-full py-14 flex flex-col justify-center items-center hover:bg-[#6a7df1] hover:text-white rounded-2xl rounded-tl-[3rem] duration-500 hover:shadow-xl cursor-pointer ${
-            inView && "animate-slide-in-from-right"
-          }`}
+          className={`w-full py-14 flex flex-col justify-center items-center 
+            hover:bg-[#6a7df1] hover:text-white rounded-2xl rounded-tl-[3rem]
+            duration-500 hover:shadow-xl cursor-pointer transition-all
+            ${
+              inView ? "animate-slide-in-from-right opacity-100" : "opacity-0"
+            }`}
         >
-          <div className="w-[4rem] h-[4rem] object-contain mb-8">
-            <img src="/icons/apple.webp" className="w-full h-full" alt="" />
+          <div className="w-[4rem] h-[4rem] mb-8">
+            <Image
+              src="/icons/apple.webp"
+              width={64}
+              height={64}
+              alt="Apple icon"
+            />
           </div>
           <h3 className="font-heading font-extrabold text-xl">250</h3>
           <p className="font-body font-light text-base">
