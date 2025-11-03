@@ -7,6 +7,8 @@ from .views import (
     MyPurchases,
     CourseSuggestionView,
     QuizGeneratorView,
+    CreateCheckoutSession,
+    MarkPurchase,
 )
 
 urlpatterns = [
@@ -16,5 +18,8 @@ urlpatterns = [
     path('courses/<int:course_id>/', PurchaseCourse.as_view(), name='purchase-course'),
     path('my-courses/', MyPurchases.as_view(), name='my-purchases'),
     path('suggest-course/', CourseSuggestionView.as_view(), name='suggest-course'),
-      path('generate-quiz/', QuizGeneratorView.as_view(), name='generate-quiz'),
+    path('generate-quiz/', QuizGeneratorView.as_view(), name='generate-quiz'),
+    path("create-checkout-session/<int:course_id>/", CreateCheckoutSession.as_view(), name="create-checkout-session"),
+    path("mark-purchase/", MarkPurchase.as_view(), name="mark-purchase"),
+
 ]

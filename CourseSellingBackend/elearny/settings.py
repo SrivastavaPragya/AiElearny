@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,6 +32,12 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+
+
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
+STRIPE_PUBLISHABLE_KEY = "pk_test_51SHpHURy0u2uRMIM0A5L2mLsJytCVJd8FrB1Rh8pvJL3RuCeZRAJp3okpMumfMFZhdfUWRtow3u6HmpM1xIHAY400097TguAn3"
+FRONTEND_URL = "http://localhost:3000"
+
 
 
 INSTALLED_APPS = [

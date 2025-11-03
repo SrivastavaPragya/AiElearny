@@ -9,10 +9,14 @@ from django.shortcuts import get_object_or_404
 from .models import Course, Purchase
 from .serializers import UserSerializer, CourseSerializer, PurchaseSerializer
 import google.generativeai as genai
+import stripe
+from django.conf import settings
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 # ✅ Configure Gemini
-genai.configure(api_key="AIzaSyBsmqbTBh3F4AAJtxJ95SK5hScx74qW8Xc")
+genai.configure(api_key="AIzaSyAXpyN5_fMd86ls7n4uRpyLNjdKF8uLigo")
 
 
 # 🔐 Signup API
@@ -53,6 +57,7 @@ class LoginView(APIView):
         if user and user.check_password(password):
             refresh = RefreshToken.for_user(user)
             return Response({
+                "user": UserSerializer(user).data,
                 "refresh": str(refresh),
                 "access": str(refresh.access_token)
             })
@@ -140,7 +145,7 @@ class CourseSuggestionView(APIView):
                 f"Return only one word: greeting, course_query, or other."
             )
 
-            model = genai.GenerativeModel('gemini-1.5-flash')
+            model = genai.GenerativeModel('gemini-2.5-flash')
             intent_response = model.generate_content(intent_prompt)
             intent = intent_response.text.strip().lower()
 
@@ -220,7 +225,7 @@ class QuizGeneratorView(APIView):
         except Course.DoesNotExist:
             return Response({"error": "Course not found"}, status=status.HTTP_404_NOT_FOUND)
 
-        # ✅ Structured JSON Prompt
+      
         prompt = (
             f"Create a 5-question multiple choice quiz on the topic: '{course.title}'.\n"
             f"Return ONLY valid JSON in the format below, and do NOT wrap it in ```json blocks.\n\n"
@@ -234,14 +239,14 @@ class QuizGeneratorView(APIView):
         )
 
         try:
-            model = genai.GenerativeModel('gemini-1.5-flash')
+            model = genai.GenerativeModel('gemini-2.5-flash')
             response = model.generate_content(prompt)
             raw_output = response.text.strip()
 
-            # ✅ Remove Markdown wrapping if present
+            #  Remove Markdown wrapping if present
             cleaned_output = re.sub(r"^```json\s*|\s*```$", "", raw_output.strip(), flags=re.IGNORECASE)
 
-            # ✅ Parse the JSON string
+            # Parse the JSON string
             try:
                 quiz_json = json.loads(cleaned_output)
             except json.JSONDecodeError:
@@ -258,3 +263,55 @@ class QuizGeneratorView(APIView):
 
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+
+
+# 💳 Create Stripe Checkout Sessio
+class CreateCheckoutSession(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, course_id):
+        course = get_object_or_404(Course, id=course_id)
+
+        try:
+            checkout_session = stripe.checkout.Session.create(
+                payment_method_types=["card"],
+                line_items=[
+                    {
+                        "price_data": {
+                            "currency": "inr",
+                            "unit_amount": int(course.price * 100),
+                            "product_data": {
+                                "name": course.title,
+                                "description": course.description,
+                            },
+                        },
+                        "quantity": 1,
+                    }
+                ],
+                mode="payment",
+                success_url=f"{settings.FRONTEND_URL}/paymentSuccess/?course_id={course.id}",
+                cancel_url=f"{settings.FRONTEND_URL}/payment-cancelled/",
+            )
+            return Response({"id": checkout_session.id, "url": checkout_session.url})
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
+
+class MarkPurchase(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        course_id = request.data.get("course_id")
+        if not course_id:
+            return Response({"error": "Course ID is required"}, status=400)
+
+        course = get_object_or_404(Course, id=course_id)
+
+        # Avoid duplicate purchases
+        purchase, created = Purchase.objects.get_or_create(
+            customer=request.user, course=course
+        )
+        if not created:
+            return Response({"message": "Course already purchased"})
+
+        return Response({"message": "Course purchased successfully"})
