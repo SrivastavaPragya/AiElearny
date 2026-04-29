@@ -68,7 +68,7 @@ export default function ChatbotWidget() {
       setMessages([
         {
           sender: "bot",
-          text: "👋 Hi, I’m Elanary Bot! How can I help you today?",
+          text: "👋 Hi, I’m ELearni Bot! How can I help you today?",
         },
       ]);
       setHasGreeted(true);

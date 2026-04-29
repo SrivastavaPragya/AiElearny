@@ -13,10 +13,11 @@ import stripe
 from django.conf import settings
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+api_key = settings.GENAI_API_KEY
 
 
 # ✅ Configure Gemini
-genai.configure(api_key="AIzaSyAXpyN5_fMd86ls7n4uRpyLNjdKF8uLigo")
+genai.configure(api_key=api_key)
 
 
 # 🔐 Signup API
